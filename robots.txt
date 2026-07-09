@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://wgt9721.github.io/earn-1-dollar/sitemap.xml
