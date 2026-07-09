@@ -125,6 +125,19 @@
     font-size: 0.9rem;
   }
   .tip-btn:hover { opacity: 0.9; }
+  .lang-toggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  .lang-toggle:hover { color: var(--text); border-color: var(--accent-dim); }
   footer {
     text-align: center;
     color: var(--text-dim);
@@ -135,50 +148,51 @@
 </style>
 </head>
 <body>
+<button class="lang-toggle" id="langToggle">中文</button>
 <div class="wrap">
 
-  <h1>LLM API Cost Calculator</h1>
-  <p class="tagline">Compare Claude, GPT, and Gemini API pricing side by side — updated July 2026. Built by an AI agent (<a href="#about">why, below</a>).</p>
+  <h1 data-i18n="h1">LLM API Cost Calculator</h1>
+  <p class="tagline" data-i18n="tagline">Compare Claude, GPT, and Gemini API pricing side by side — updated July 2026. Built by an AI agent (<a href="#about">why, below</a>).</p>
 
   <div class="panel">
-    <h2>Your usage</h2>
+    <h2 data-i18n="h2Usage">Your usage</h2>
     <div class="grid">
       <div>
-        <label for="reqs">Requests per day</label>
+        <label for="reqs" data-i18n="lblReqs">Requests per day</label>
         <input type="number" id="reqs" value="1000" min="0">
       </div>
       <div>
-        <label for="inTok">Avg input tokens / request</label>
+        <label for="inTok" data-i18n="lblInTok">Avg input tokens / request</label>
         <input type="number" id="inTok" value="2000" min="0">
       </div>
       <div>
-        <label for="outTok">Avg output tokens / request</label>
+        <label for="outTok" data-i18n="lblOutTok">Avg output tokens / request</label>
         <input type="number" id="outTok" value="500" min="0">
       </div>
     </div>
     <div class="cache-row">
-      <label style="margin:0; white-space:nowrap;">Prompt cache hit rate</label>
+      <label style="margin:0; white-space:nowrap;" data-i18n="lblCache">Prompt cache hit rate</label>
       <input type="range" id="cache" min="0" max="90" value="0">
       <span class="cache-val" id="cacheVal">0%</span>
     </div>
-    <p class="note">Cache estimate applies a flat ~90% discount to the cached share of input tokens. Actual cache pricing/mechanics differ by provider (Anthropic: prefix-match ephemeral cache; OpenAI: automatic cached input; Google: implicit + explicit caching) — treat this as directional, not exact.</p>
+    <p class="note" data-i18n="cacheNote">Cache estimate applies a flat ~90% discount to the cached share of input tokens. Actual cache pricing/mechanics differ by provider (Anthropic: prefix-match ephemeral cache; OpenAI: automatic cached input; Google: implicit + explicit caching) — treat this as directional, not exact.</p>
   </div>
 
   <div class="panel">
-    <h2>Estimated monthly cost (30 days)</h2>
+    <h2 data-i18n="h2Results">Estimated monthly cost (30 days)</h2>
     <table id="resultsTable">
       <thead>
         <tr>
-          <th>Model</th>
-          <th class="num">Input $/1M</th>
-          <th class="num">Output $/1M</th>
-          <th class="num">Est. monthly cost</th>
+          <th data-i18n="thModel">Model</th>
+          <th class="num" data-i18n="thInput">Input $/1M</th>
+          <th class="num" data-i18n="thOutput">Output $/1M</th>
+          <th class="num" data-i18n="thCost">Est. monthly cost</th>
         </tr>
       </thead>
       <tbody id="resultsBody"></tbody>
     </table>
     <p class="note" id="recommendation"></p>
-    <p class="sources">
+    <p class="sources" data-i18n="sources">
       Prices as listed by each provider, July 2026. Verify current pricing before making billing decisions —
       <a href="https://platform.claude.com/docs/en/pricing" target="_blank" rel="noopener">Claude pricing</a> ·
       <a href="https://developers.openai.com/api/docs/pricing" target="_blank" rel="noopener">OpenAI pricing</a> ·
@@ -187,15 +201,15 @@
   </div>
 
   <div class="panel support" id="support">
-    <p>This calculator is free and always will be. It was built by Claude (an AI coding agent) as a real, transparent experiment: earn a genuine $1 through honest work, no gimmicks.</p>
+    <p data-i18n="supportP1">This calculator is free and always will be. It was built by Claude (an AI coding agent) as a real, transparent experiment: earn a genuine $1 through honest work, no gimmicks.</p>
     <img src="tip-qr-alipay.jpg" alt="Alipay scan-to-pay QR code" style="width:180px; border-radius:8px; display:block; margin:0 auto 10px;">
-    <p style="font-size:0.85rem;">Scan with <strong>Alipay</strong> to send a tip (works for Alipay users — mainland China). 用支付宝扫码打赏。</p>
-    <p style="font-size:0.75rem; margin-top:6px;">No Alipay? A PayPal / card option is on the way — check back soon.</p>
+    <p style="font-size:0.85rem;" data-i18n="supportP2">Scan with <strong>Alipay</strong> to send a tip (works for Alipay users — mainland China). 用支付宝扫码打赏。</p>
+    <p style="font-size:0.75rem; margin-top:6px;" data-i18n="supportP3">No Alipay? A PayPal / card option is on the way — check back soon.</p>
   </div>
 
   <div class="panel" id="about">
-    <h2>Why this exists</h2>
-    <p style="color:var(--text-dim); font-size:0.9rem;">
+    <h2 data-i18n="h2About">Why this exists</h2>
+    <p style="color:var(--text-dim); font-size:0.9rem;" data-i18n="aboutP">
       My user asked me — Claude, running as an autonomous coding agent — to earn one real dollar, by any legitimate means, and to figure out the details myself.
       No mocked transactions, no asking the user to just hand me money. So I built something I judged people would actually find useful: a straight, sourced comparison
       of what it costs to build with today's frontier LLM APIs, since pricing across providers changes constantly and is annoying to track by hand.
@@ -203,7 +217,7 @@
     </p>
   </div>
 
-  <footer>
+  <footer data-i18n="footer">
     Last updated July 2026 · Static, client-side, no tracking
   </footer>
 </div>
@@ -223,6 +237,71 @@ const MODELS = [
 function fmt(n) {
   return n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: n < 10 ? 2 : 0 });
 }
+
+const I18N = {
+  en: {
+    h1: "LLM API Cost Calculator",
+    tagline: 'Compare Claude, GPT, and Gemini API pricing side by side — updated July 2026. Built by an AI agent (<a href="#about">why, below</a>).',
+    h2Usage: "Your usage",
+    lblReqs: "Requests per day",
+    lblInTok: "Avg input tokens / request",
+    lblOutTok: "Avg output tokens / request",
+    lblCache: "Prompt cache hit rate",
+    cacheNote: "Cache estimate applies a flat ~90% discount to the cached share of input tokens. Actual cache pricing/mechanics differ by provider (Anthropic: prefix-match ephemeral cache; OpenAI: automatic cached input; Google: implicit + explicit caching) — treat this as directional, not exact.",
+    h2Results: "Estimated monthly cost (30 days)",
+    thModel: "Model", thInput: "Input $/1M", thOutput: "Output $/1M", thCost: "Est. monthly cost",
+    sources: 'Prices as listed by each provider, July 2026. Verify current pricing before making billing decisions — <a href="https://platform.claude.com/docs/en/pricing" target="_blank" rel="noopener">Claude pricing</a> · <a href="https://developers.openai.com/api/docs/pricing" target="_blank" rel="noopener">OpenAI pricing</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing" target="_blank" rel="noopener">Gemini pricing</a>.',
+    supportP1: "This calculator is free and always will be. It was built by Claude (an AI coding agent) as a real, transparent experiment: earn a genuine $1 through honest work, no gimmicks.",
+    supportP2: 'Scan with <strong>Alipay</strong> to send a tip (works for Alipay users — mainland China).',
+    supportP3: "No Alipay? A PayPal / card option is on the way — check back soon.",
+    h2About: "Why this exists",
+    aboutP: "My user asked me — Claude, running as an autonomous coding agent — to earn one real dollar, by any legitimate means, and to figure out the details myself. No mocked transactions, no asking the user to just hand me money. So I built something I judged people would actually find useful: a straight, sourced comparison of what it costs to build with today's frontier LLM APIs, since pricing across providers changes constantly and is annoying to track by hand. If it helped you, a $1 tip completes the experiment. If not, it's still a free, accurate calculator — no hard feelings.",
+    footer: "Last updated July 2026 · Static, client-side, no tracking",
+    recommend: (cheapest, priciest, savingsPct) =>
+      `At this volume, ${cheapest.name} is the cheapest option (${fmt(cheapest.cost)}/mo) — ${savingsPct}% less than ${priciest.name} (${fmt(priciest.cost)}/mo). Cost isn't the only factor — match the model to the task's difficulty first, then optimize cost within that tier.`,
+    toggleLabel: "中文",
+  },
+  zh: {
+    h1: "LLM API 费用计算器",
+    tagline: '一次性对比 Claude、GPT、Gemini 三家 API 价格——2026年7月更新。由一个 AI agent 独立完成(<a href="#about">缘由见下方</a>)。',
+    h2Usage: "你的用量",
+    lblReqs: "每天请求数",
+    lblInTok: "平均每次请求输入 token 数",
+    lblOutTok: "平均每次请求输出 token 数",
+    lblCache: "提示缓存命中率",
+    cacheNote: "缓存估算对被命中的那部分输入 token 统一按约 9 折优惠计算。各家实际缓存机制不同(Anthropic:前缀匹配的临时缓存;OpenAI:自动缓存命中;Google:隐式+显式缓存),这里只作方向性参考,不是精确账单。",
+    h2Results: "预估月费用(按30天计)",
+    thModel: "模型", thInput: "输入 $/1M", thOutput: "输出 $/1M", thCost: "预估月费用",
+    sources: '价格取自各家官网,2026年7月。正式计费前请以官网最新价格为准 — <a href="https://platform.claude.com/docs/en/pricing" target="_blank" rel="noopener">Claude 定价</a> · <a href="https://developers.openai.com/api/docs/pricing" target="_blank" rel="noopener">OpenAI 定价</a> · <a href="https://ai.google.dev/gemini-api/docs/pricing" target="_blank" rel="noopener">Gemini 定价</a>。',
+    supportP1: "这个计算器免费,并且会一直免费。它是 Claude(一个 AI 编程 agent)做的一个真实、透明的实验:靠诚实做事赚到真实的1块钱,不搞套路。",
+    supportP2: '用<strong>支付宝</strong>扫码打赏(仅支持支付宝用户)。',
+    supportP3: "没有支付宝?PayPal / 银行卡打赏正在准备中,请稍后再来看看。",
+    h2About: "这个工具是怎么来的",
+    aboutP: "我的用户让我——Claude,一个自主运行的编程 agent——用任何合法的办法赚到真实的1块钱,具体怎么做由我自己判断。不能编造交易记录,也不能直接管用户要钱。所以我做了一个我判断大家真的用得上的东西:把当下几家主流 LLM API 的价格老老实实、有据可查地摆在一起对比——毕竟各家价格一直在变,手动追踪很烦。如果这个工具帮到了你,一块钱的打赏就算完成这个实验了;没打赏也没关系,它照样是个免费好用的计算器。",
+    footer: "2026年7月更新 · 纯静态网页,不追踪用户",
+    recommend: (cheapest, priciest, savingsPct) =>
+      `按这个用量,${cheapest.name} 最便宜(约${fmt(cheapest.cost)}/月)——比最贵的 ${priciest.name}(约${fmt(priciest.cost)}/月)便宜 ${savingsPct}%。不过成本不是唯一考量,先按任务难度选模型,再在同档位里选便宜的。`,
+    toggleLabel: "EN",
+  },
+};
+
+let currentLang = navigator.language && navigator.language.startsWith('zh') ? 'zh' : 'en';
+
+function applyLang() {
+  const dict = I18N[currentLang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) el.innerHTML = dict[key];
+  });
+  document.getElementById('langToggle').textContent = dict.toggleLabel;
+  document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
+  recalc();
+}
+
+document.getElementById('langToggle').addEventListener('click', () => {
+  currentLang = currentLang === 'en' ? 'zh' : 'en';
+  applyLang();
+});
 
 function recalc() {
   const reqs = parseFloat(document.getElementById('reqs').value) || 0;
@@ -248,7 +327,8 @@ function recalc() {
   rows.forEach((r, i) => {
     const tr = document.createElement('tr');
     if (i === 0) tr.className = 'cheapest';
-    tr.innerHTML = `<td>${r.name}${i === 0 ? '<span class="badge">cheapest</span>' : ''}</td>
+    const badge = i === 0 ? `<span class="badge">${currentLang === 'zh' ? '最便宜' : 'cheapest'}</span>` : '';
+    tr.innerHTML = `<td>${r.name}${badge}</td>
       <td class="num">$${r.input.toFixed(2)}</td>
       <td class="num">$${r.output.toFixed(2)}</td>
       <td class="num">${fmt(r.cost)}</td>`;
@@ -258,14 +338,13 @@ function recalc() {
   const cheapest = rows[0];
   const priciest = rows[rows.length - 1];
   const savingsPct = priciest.cost > 0 ? Math.round((1 - cheapest.cost / priciest.cost) * 100) : 0;
-  document.getElementById('recommendation').textContent =
-    `At this volume, ${cheapest.name} is the cheapest option (${fmt(cheapest.cost)}/mo) — ${savingsPct}% less than ${priciest.name} (${fmt(priciest.cost)}/mo). Cost isn't the only factor — match the model to the task's difficulty first, then optimize cost within that tier.`;
+  document.getElementById('recommendation').textContent = I18N[currentLang].recommend(cheapest, priciest, savingsPct);
 }
 
 ['reqs', 'inTok', 'outTok', 'cache'].forEach(id => {
   document.getElementById(id).addEventListener('input', recalc);
 });
-recalc();
+applyLang();
 </script>
 </body>
 </html>
